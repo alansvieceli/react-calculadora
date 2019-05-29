@@ -1,7 +1,7 @@
 import React, {Component} from 'react'
 import './Calculator.css'
-import Button  from '../Componentes/Button/Button'
-import Display from '../Componentes/Display/Display'
+import Button  from '../Components/Button/Button'
+import Display from '../Components/Display/Display'
 
 export default class Calculator extends Component {
 
