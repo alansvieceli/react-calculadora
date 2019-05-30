@@ -37,7 +37,7 @@ export default class Calculator extends Component {
             return
         }
 
-        const clearDisplay = this.state.displayValue === '0' || this.state.clearDisplay;
+        const clearDisplay = this.state.displayValue == '0' || this.state.clearDisplay;
         const currentValue = clearDisplay ? '' : this.state.displayValue;
         const displayValue = currentValue + digit;
 
