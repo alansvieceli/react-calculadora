@@ -3,7 +3,18 @@ import './Calculator.css'
 import Button  from '../Components/Button/Button'
 import Display from '../Components/Display/Display'
 
+const initialState = {
+    displayValue: "0",
+    clearDisplay: false,
+    operation: null,
+    values: [0, 0],
+    current: 0
+}
+
 export default class Calculator extends Component {
+
+    // {...  cria um clone do objeto
+    state = { ...initialState}
 
     constructor(props){
         super(props);
@@ -14,7 +25,7 @@ export default class Calculator extends Component {
 
 
     clearDisplay(){
-        console.log("Limpar")
+        this.setState({ ...initialState });
     }
 
     setOperation(operacao){
@@ -22,7 +33,25 @@ export default class Calculator extends Component {
     }
 
     addDigit(digit){
-        console.log(digit);
+        if (digit == '.' && this.state.displayValue.includes('.')){
+            return
+        }
+
+        const clearDisplay = this.state.displayValue === '0' || this.state.clearDisplay;
+        const currentValue = clearDisplay ? '' : this.state.displayValue;
+        const displayValue = currentValue + digit;
+
+        this.setState({displayValue, clearDisplay: false});
+
+        if (digit != "."){
+            const i = this.state.current;
+            const newValue = parseFloat(displayValue);
+            const values = [...this.state.values]; //clonando
+            values[i] = newValue;
+
+            this.setState({values});
+            console.log(this.state);
+        }
     }
 
     render(){
@@ -34,7 +63,7 @@ export default class Calculator extends Component {
         */
         return (
             <div className="calculator">
-                <Display value={0} />
+                <Display value={this.state.displayValue} />
                 <Button label="AC" click={this.clearDisplay} triple/>
                 <Button label="/" click={this.setOperation} operation/>
                 <Button label="7" click={this.addDigit}/>
