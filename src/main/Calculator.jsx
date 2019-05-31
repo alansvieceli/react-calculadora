@@ -28,8 +28,49 @@ export default class Calculator extends Component {
         this.setState({ ...initialState });
     }
 
-    setOperation(operacao){
-        console.log(operacao);
+    setOperation(operation){
+        if (this.state.current === 0){
+            this.setState({operation, current: 1, clearDisplay: true})
+
+        } else {
+            const equals = operation === '=';
+            const currntOperation = this.state.operation;
+
+            const values = [...this.state.values]
+
+            switch (currntOperation) {
+                case "+":
+                    values[0] = values[0] + values[1];
+                    break;
+
+                case "-":
+                    values[0] = values[0] - values[1];
+                    break;
+
+                case "/":
+                    values[0] = values[0] / values[1];
+                    break;
+
+                case "*":
+                    values[0] = values[0] * values[1];
+                    break;
+            
+                default:
+                    values[0] = this.state.values[0];
+                    break;
+            }
+
+
+            values[1] = 0
+
+            this.setState({
+                displayValue: values[0],
+                operation: equals ? null : operation,
+                currentValue: equals ? 0 : 1,
+                clearDisplay: !equals,
+                values: values
+            });
+        }
     }
 
     addDigit(digit){
